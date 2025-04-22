@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const usePostURL = (url = "https://fakestoreapi.com/products") => {
+const usePostURL = (url = "http://localhost:3000/posts") => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -19,7 +19,10 @@ const usePostURL = (url = "https://fakestoreapi.com/products") => {
         }
         return response.json();
       })
-      .then((response) => setData(response))
+      .then((response) => {
+        console.log(response);
+        setData(response);
+      })
       .catch((error) => setError(error))
       .finally(() => setLoading(false));
   }, []);

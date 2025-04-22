@@ -1,120 +1,77 @@
-import React from "react";
-import styles from "./styles/homeblog.module.css";
-import { Card, CardContent } from "./componets/card";
-import { Button } from "./componets/button";
-import { Calendar, User } from "lucide-react";
+import "./index.css";
+import { usePostURL } from "./utilis/postUrljsx";
 
-const blogPosts = [
-  {
-    id: 1,
-    title: "Welcome to My Blog!",
-    description:
-      "This is the beginning of something awesome. Here I'll share thoughts, tutorials, and more!",
-    date: "April 20, 2025",
-    author: "John Doe",
-    image: "./screen.png",
-  },
-  {
-    id: 2,
-    title: "Top 10 React Tips for Developers",
-    description:
-      "Boost your React skills with these practical and easy-to-implement tips.",
-    date: "April 15, 2025",
-    author: "Jane Smith",
-    image: "./screen2.png",
-  },
-  {
-    id: 1,
-    title: "Welcome to My Blog!",
-    description:
-      "This is the beginning of something awesome. Here I'll share thoughts, tutorials, and more!",
-    date: "April 20, 2025",
-    author: "John Doe",
-    image: "./screen.png",
-  },
-  {
-    id: 1,
-    title: "Welcome to My Blog!",
-    description:
-      "This is the beginning of something awesome. Here I'll share thoughts, tutorials, and more!",
-    date: "April 20, 2025",
-    author: "John Doe",
-    image: "./screen.png",
-  },
-  {
-    id: 1,
-    title: "Welcome to My Blog!",
-    description:
-      "This is the beginning of something awesome. Here I'll share thoughts, tutorials, and more!",
-    date: "April 20, 2025",
-    author: "John Doe",
-    image: "./screen.png",
-  },
-  {
-    id: 1,
-    title: "Welcome to My Blog!",
-    description:
-      "This is the beginning of something awesome. Here I'll share thoughts, tutorials, and more!",
-    date: "April 20, 2025",
-    author: "John Doe",
-    image: "./screen.png",
-  },
-];
+const App = () => {
+  const { data, error, loading } = usePostURL();
 
-function Header() {
+  if (loading) {
+    return <p style={{ textAlign: "center" }}>Loading posts...</p>;
+  }
+
+  if (error) {
+    return <p style={{ color: "red", textAlign: "center" }}>{error.message}</p>;
+  }
+
   return (
-    <header className={styles.header}>
-      <div className={styles.headerContainer}>
-        <h1 className={styles.logo}>wordFlex</h1>
-        <nav className={styles.navLinks}>
-          <a href="#">Home</a>
+    <div className="container">
+      {/* Header */}
+      <header className="header">
+        <div className="header-top">
+          <div className="logo">★ WordFlux ★</div>
+          <div className="separator"></div>
+        </div>
+        <nav className="nav">
           <a href="#">About</a>
           <a href="#">Contact</a>
-          <a href="#">Login</a>
+          <a href="#">Cool Websites</a>
         </nav>
-      </div>
-    </header>
-  );
-}
+      </header>
 
-function Footer() {
-  return (
-    <footer className={styles.footer}>
-      <div className={styles.footerContainer}>
-        <p>&copy; {new Date().getFullYear()} wordFlex. All rights reserved.</p>
-      </div>
-    </footer>
-  );
-}
+      {/* Blog Posts */}
+      {data && data.length > 0 ? (
+        data
+          .filter((post) => post.title && post.content)
+          .map((post) => (
+            <article className="blog" key={post.id}>
+              <h1 className="blog-title">{post.title}</h1>
+              <div className="dotteddiv">
+                <div className="dotted-line"></div>
+                <div className="dotted-line"></div>
+              </div>
 
-export default function HomeBlogPostUI() {
-  return (
-    <div>
-      <Header />
-      <main className={styles.main}>
-        <h1 className={styles.mainHeading}>Latest Blog Posts</h1>
-        <div className={styles.postsGrid}>
-          {blogPosts.map((post) => (
-            <Card key={post.id} className={styles.card}>
-              <img
-                src={post.image}
-                alt={post.title}
-                className={styles.cardImage}
-              />
-              <CardContent className={styles.cardContent}>
-                <h2 className={styles.cardTitle}>{post.title}</h2>
-                <p className={styles.meta}>
-                  <Calendar size={16} /> {post.date} • <User size={16} />{" "}
-                  {post.author}
-                </p>
-                <p className={styles.description}>{post.description}</p>
-                <Button className={styles.readMore}>Read More</Button>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </main>
-      <Footer />
+              <div className="meta">
+                {new Date(post.createdAt).toLocaleDateString()} ::{" "}
+                <span className="author">
+                  {post.author?.name || "Unknown Author"}
+                </span>
+              </div>
+              <div className="tags">
+                <span>#tech</span>
+                <span>#self-hosting</span>
+              </div>
+
+              {/* Blog Image */}
+              <div className="blog-image-wrapper">
+                <img
+                  src="./screen.png"
+                  alt="Blog Preview"
+                  className="blog-image"
+                />
+              </div>
+              <div className="content">
+                <p>{post.content.slice(0, 300)}...</p>
+              </div>
+              <div className="readmore">
+                <a href="#">Read more →</a>
+              </div>
+              <hr />
+            </article>
+          ))
+      ) : (
+        <p style={{ textAlign: "center" }}>No posts available.</p>
+      )}
     </div>
   );
-}
+};
+
+export default App;
