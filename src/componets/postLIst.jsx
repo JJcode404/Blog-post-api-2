@@ -1,7 +1,7 @@
-import "./index.css";
-import { usePostURL } from "./utilis/postUrljsx";
+import { Link } from "react-router-dom";
+import { usePostURL } from "../utilis/postUrljsx";
 
-const App = () => {
+const PostList = () => {
   const { data, error, loading } = usePostURL();
 
   if (loading) {
@@ -13,27 +13,16 @@ const App = () => {
   }
 
   return (
-    <div className="container">
-      {/* Header */}
-      <header className="header">
-        <div className="header-top">
-          <div className="logo">★ WordFlux ★</div>
-          <div className="separator"></div>
-        </div>
-        <nav className="nav">
-          <a href="#">About</a>
-          <a href="#">Contact</a>
-          <a href="#">Cool Websites</a>
-        </nav>
-      </header>
-
-      {/* Blog Posts */}
+    <>
       {data && data.length > 0 ? (
         data
           .filter((post) => post.title && post.content)
           .map((post) => (
             <article className="blog" key={post.id}>
-              <h1 className="blog-title">{post.title}</h1>
+              <Link to={`posts/${post.id}`}>
+                <h1 className="blog-title">{post.title}</h1>
+              </Link>
+
               <div className="dotteddiv">
                 <div className="dotted-line"></div>
                 <div className="dotted-line"></div>
@@ -53,7 +42,7 @@ const App = () => {
               {/* Blog Image */}
               <div className="blog-image-wrapper">
                 <img
-                  src="./screen.png"
+                  src="./screen2.png"
                   alt="Blog Preview"
                   className="blog-image"
                 />
@@ -62,7 +51,7 @@ const App = () => {
                 <p>{post.content.slice(0, 300)}...</p>
               </div>
               <div className="readmore">
-                <a href="#">Read more →</a>
+                <Link to={`posts/${post.id}`}>Read more →</Link>
               </div>
               <hr />
             </article>
@@ -70,8 +59,8 @@ const App = () => {
       ) : (
         <p style={{ textAlign: "center" }}>No posts available.</p>
       )}
-    </div>
+    </>
   );
 };
 
-export default App;
+export { PostList };

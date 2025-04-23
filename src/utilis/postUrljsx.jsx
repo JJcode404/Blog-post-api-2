@@ -10,7 +10,6 @@ const usePostURL = (url = "http://localhost:3000/posts") => {
     if (!url) {
       setError("Url required");
       setLoading(false);
-      return;
     }
     fetch(`${url}`, { mode: "cors" })
       .then((response) => {
@@ -18,6 +17,7 @@ const usePostURL = (url = "http://localhost:3000/posts") => {
           throw new Error("server error");
         }
         return response.json();
+        return;
       })
       .then((response) => {
         console.log(response);

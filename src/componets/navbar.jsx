@@ -1,25 +1,16 @@
-import styles from "../styles/navbar.module.css";
-
 function Navbar() {
   return (
-    <div className={styles.header}>
-      <div className={styles.top}>
-        <div className={styles.logo}>★ WordFlux ★</div>
+    <header className="header">
+      <div className="header-top">
+        <div className="logo">★ WordFlux ★</div>
+        <div className="separator"></div>
       </div>
-      <div className={styles.navlinks}>
-        <ul>
-          <li>
-            <a href="#">About</a>
-          </li>
-          <li>
-            <a href="#">Contact</a>
-          </li>
-          <li>
-            <a href="#">Cool Website</a>
-          </li>
-        </ul>
-      </div>
-    </div>
+      <nav className="nav">
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+        <a href="#">Cool Websites</a>
+      </nav>
+    </header>
   );
 }
 
