@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const usePostURL = (url = "http://localhost:3000/posts") => {
+const usePostReq = (url = "http://localhost:3000/posts") => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -30,4 +30,4 @@ const usePostURL = (url = "http://localhost:3000/posts") => {
   return { data, error, loading };
 };
 
-export { usePostURL };
+export { useFetch };

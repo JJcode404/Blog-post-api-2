@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
-import { usePostURL } from "../utilis/postUrljsx";
-
+import { useFetch } from "../utilis/userFetch";
 const PostList = () => {
-  const { data, error, loading } = usePostURL();
+  const { data, error, loading } = useFetch();
 
   if (loading) {
     return <p style={{ textAlign: "center" }}>Loading posts...</p>;

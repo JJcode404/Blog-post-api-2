@@ -1,8 +1,7 @@
-import { usePostURL } from "../utilis/postUrljsx";
-import { Link } from "react-router-dom";
+import { useFetch } from "../utilis/userFetch";
 
 function Blog({ blogId }) {
-  const { data, error, loading } = usePostURL(
+  const { data, error, loading } = useFetch(
     `http://localhost:3000/posts/${blogId}`
   );
 
@@ -37,9 +36,7 @@ function Blog({ blogId }) {
             <span>#self-hosting</span>
           </div>
 
-          <div className="content">
-            <p>{data.content}</p>
-          </div>
+          <div className="content">{data.content}</div>
         </article>
       )}
     </>
