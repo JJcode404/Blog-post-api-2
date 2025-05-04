@@ -21,7 +21,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid black;
+  /* border-bottom: 1px solid black; */
   padding-bottom: 8px;
   margin: 20px 0;
 }
@@ -41,12 +41,21 @@ body {
 .nav {
   margin-top: 16px;
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.left {
+  display: flex;
   gap: 24px;
   text-decoration: underline;
   font-weight: 500;
 }
 .nav a {
   color: black;
+}
+.end {
+  font-size: 1.3em;
+  font-weight: bold;
 }
 
 .blog {
@@ -105,7 +114,6 @@ hr {
 .header-top {
   display: flex;
   align-items: center;
-  border-bottom: 1px solid black;
   padding-bottom: 8px;
   font-size: 1.5em;
 }
@@ -267,4 +275,9 @@ button:hover {
 
 .footer a:hover {
   color: #333;
+}
+.buttondiv {
+  display: flex;
+  margin-left: 10px;
+  gap: 8px;
 }

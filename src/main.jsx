@@ -1,13 +1,15 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { HomePage } from "./Pages/Home";
 import { routes } from "./componets/routers/routers";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { AuthProvider } from "./utilis/authContextapi";
 
 const router = createBrowserRouter(routes);
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </StrictMode>
 );
