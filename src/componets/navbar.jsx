@@ -21,7 +21,6 @@ function Navbar() {
           <a href="#">Contact</a>
           <a href="#">Cool Websites</a>
         </div>
-        ``
         {user ? (
           <span className="welcome end">
             Welcome 👋{user.user.name || user.user.email || "User"}🎉
