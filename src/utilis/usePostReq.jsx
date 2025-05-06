@@ -1,33 +1,39 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-const usePostReq = (url = "http://localhost:3000/posts") => {
+const usePostReq = () => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    console.log(url);
-    if (!url) {
-      setError("Url required");
+  const postData = async (url, payload) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Server error");
+      }
+
+      const result = await response.json();
+      setData(result);
+      return result;
+    } catch (err) {
+      setError(err.message || "Unknown error");
+    } finally {
       setLoading(false);
     }
-    fetch(`${url}`, { mode: "cors" })
-      .then((response) => {
-        if (response.status >= 400) {
-          throw new Error("server error");
-        }
-        return response.json();
-        return;
-      })
-      .then((response) => {
-        console.log(response);
-        setData(response);
-      })
-      .catch((error) => setError(error))
-      .finally(() => setLoading(false));
-  }, []);
+  };
 
-  return { data, error, loading };
+  return { data, error, loading, postData };
 };
 
-export { useFetch };
+export { usePostReq };

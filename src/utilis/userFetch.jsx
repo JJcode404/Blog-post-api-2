@@ -17,7 +17,6 @@ const useFetch = (url = "http://localhost:3000/posts") => {
           throw new Error("server error");
         }
         return response.json();
-        return;
       })
       .then((response) => {
         console.log(response);
