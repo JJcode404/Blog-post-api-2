@@ -281,6 +281,10 @@ button:hover {
   margin-left: 10px;
   gap: 8px;
 }
+nav .logout {
+  color: red;
+  cursor: pointer;
+}
 
 @media (max-width: 768px) {
   nav {

@@ -1,13 +1,25 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { jwtDecode } from "jwt-decode";
 
 const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-  const login = async (email, password) => {
-    console.log("Email:", email, "Password:", password);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const decoded = jwtDecode(token);
+        setUser(decoded);
+      } catch (e) {
+        console.error("Invalid token", e);
+        localStorage.removeItem("token");
+      }
+    }
+  }, []);
 
+  const login = async (email, password) => {
     const response = await fetch("http://localhost:3000/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -21,7 +33,8 @@ const AuthProvider = ({ children }) => {
     }
 
     console.log("Login successful:", data);
-    setUser(data);
+    localStorage.setItem("token", data.Token);
+    setUser(data.user);
     return data;
   };
 
@@ -49,7 +62,10 @@ const AuthProvider = ({ children }) => {
     console.log("signup successful:", LoginInUser);
   };
 
-  const logout = () => setUser(null);
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem("token");
+  };
 
   return (
     <AuthContext.Provider value={{ user, login, logout, setUser, signUp }}>

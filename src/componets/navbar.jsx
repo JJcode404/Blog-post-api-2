@@ -3,7 +3,7 @@ import { useAuth } from "../utilis/authContextapi";
 import { useState } from "react";
 
 function Navbar() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   console.log(user);
 
   return (
@@ -23,7 +23,10 @@ function Navbar() {
         </div>
         {user ? (
           <span className="welcome end">
-            Welcome 👋{user.user.name || user.user.email || "User"}🎉
+            Welcome 👋{user.name || user.email || "User"}🎉 |{" "}
+            <a className="logout" onClick={logout}>
+              logout
+            </a>
           </span>
         ) : (
           <span className="login end">
