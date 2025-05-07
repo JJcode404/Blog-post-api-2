@@ -1,38 +1,43 @@
 // CommentSection.jsx
-
 import { useState, useEffect } from "react";
 import { useAuth } from "../utilis/authContextapi";
 import { usePostReq } from "../utilis/usePostReq";
 import { useFetch } from "../utilis/userFetch";
 import { format } from "date-fns";
+import { useNavigate } from "react-router-dom";
 
 function CommentBox({ blogId, onNewComment }) {
   const { error, loading, postData } = usePostReq();
   const { user } = useAuth();
   const [content, setContent] = useState("");
+  const navigate = useNavigate();
 
   const handlePostComment = async (e) => {
     e.preventDefault();
-    try {
-      if (content) {
-        const newComment = await postData(
-          `http://localhost:3000/posts/${blogId}/comments`,
-          {
-            content,
-            userId: user.id,
-          }
-        );
-        console.log(
-          "here is the new comment data from new comment",
-          newComment
-        );
-        setContent("");
+    if (user) {
+      try {
+        if (content) {
+          const newComment = await postData(
+            `http://localhost:3000/posts/${blogId}/comments`,
+            {
+              content,
+              userId: user.id,
+            }
+          );
+          console.log(
+            "here is the new comment data from new comment",
+            newComment
+          );
+          setContent("");
 
-        // Add new comment to list
-        if (onNewComment) onNewComment(newComment);
+          // Add new comment to list
+          if (onNewComment) onNewComment(newComment);
+        }
+      } catch (err) {
+        console.error("Failed to post comment:", err);
       }
-    } catch (err) {
-      console.error("Failed to post comment:", err);
+    } else {
+      navigate("/account");
     }
   };
 
@@ -45,7 +50,12 @@ function CommentBox({ blogId, onNewComment }) {
           onChange={(e) => setContent(e.target.value)}
         />
         <br />
-        <button type="submit">Submit</button>
+        <div className="submitdiv">
+          <button type="submit" disabled={!user}>
+            Submit
+          </button>
+          {!user && <p>Please log in to comment.</p>}
+        </div>
         {loading && <p>Commenting...</p>}
         {error && <p style={{ color: "red" }}>{error}</p>}
       </form>

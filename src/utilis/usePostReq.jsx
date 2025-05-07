@@ -4,6 +4,7 @@ const usePostReq = () => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const token = localStorage.getItem("token");
 
   const postData = async (url, payload) => {
     setLoading(true);
@@ -14,6 +15,7 @@ const usePostReq = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(payload),
       });

@@ -54,7 +54,6 @@ body {
   color: black;
 }
 .end {
-  font-size: 1.3em;
   font-weight: bold;
 }
 
@@ -284,6 +283,14 @@ button:hover {
 nav .logout {
   color: red;
   cursor: pointer;
+}
+.submitdiv {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.submitdiv p {
+  color: red;
 }
 
 @media (max-width: 768px) {

@@ -18,7 +18,7 @@ const PostList = () => {
           .filter((post) => post.title && post.content)
           .map((post) => (
             <article className="blog" key={post.id}>
-              <Link to={`posts/${post.id}`}>
+              <Link to={`/posts/${post.id}`}>
                 <h1 className="blog-title">{post.title}</h1>
               </Link>
 
