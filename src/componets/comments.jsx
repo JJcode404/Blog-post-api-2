@@ -7,13 +7,18 @@ import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 
 function CommentBox({ blogId, onNewComment }) {
-  const { error, loading, postData } = usePostReq();
-  const { user } = useAuth();
+  const { loading, postData } = usePostReq();
+  const { user, logout } = useAuth();
   const [content, setContent] = useState("");
   const navigate = useNavigate();
 
   const handlePostComment = async (e) => {
     e.preventDefault();
+    if (!user || !user.id) {
+      logout();
+      navigate("/account");
+      return;
+    }
     if (user) {
       try {
         if (content) {
@@ -31,10 +36,14 @@ function CommentBox({ blogId, onNewComment }) {
           setContent("");
 
           // Add new comment to list
-          if (onNewComment) onNewComment(newComment);
+          if (newComment) {
+            onNewComment(newComment);
+          }
         }
       } catch (err) {
-        console.error("Failed to post comment:", err);
+        console.log("hey here is the error for", err);
+        logout();
+        // navigate("/account");
       }
     } else {
       navigate("/account");
@@ -57,7 +66,6 @@ function CommentBox({ blogId, onNewComment }) {
           {!user && <p>Please log in to comment.</p>}
         </div>
         {loading && <p>Commenting...</p>}
-        {error && <p style={{ color: "red" }}>{error}</p>}
       </form>
     </div>
   );
@@ -77,6 +85,7 @@ function CommentSection({ blogId }) {
   }, [data]);
 
   const handleNewComment = (newComment) => {
+    console.log("hey am called", comments);
     setComments((prev) => [newComment, ...prev]);
   };
 

@@ -22,7 +22,11 @@ const usePostReq = () => {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || "Server error");
+        const message =
+          response.status === 403
+            ? errorData.error || "Session expired. Please log in again."
+            : errorData.error || "Server error";
+        throw new Error(message);
       }
 
       const result = await response.json();
@@ -30,6 +34,7 @@ const usePostReq = () => {
       return result;
     } catch (err) {
       setError(err.message || "Unknown error");
+      throw err;
     } finally {
       setLoading(false);
     }
