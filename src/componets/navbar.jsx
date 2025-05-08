@@ -18,8 +18,7 @@ function Navbar() {
       <nav className="nav">
         <div className="left">
           <Link to={"pages/about"}>About</Link>
-          <a href="#">Contact</a>
-          <a href="#">Cool Websites</a>
+          <a href="mailto:khamjapher1@gmail.com">Contact</a>
         </div>
         {user ? (
           <span className="welcome end">

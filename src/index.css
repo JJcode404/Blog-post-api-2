@@ -296,7 +296,9 @@ nav .logout {
 @media (max-width: 768px) {
   nav {
     flex-direction: column;
-    align-items: self-start;
     gap: 16px;
+  }
+  .nav {
+    align-items: self-start;
   }
 }
