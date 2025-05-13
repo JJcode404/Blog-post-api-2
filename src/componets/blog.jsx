@@ -1,4 +1,5 @@
 import { useFetch } from "../utilis/userFetch";
+import DOMPurify from "dompurify";
 
 function Blog({ blogId }) {
   const { data, error, loading } = useFetch(
@@ -32,11 +33,19 @@ function Blog({ blogId }) {
           </div>
 
           <div className="tags">
-            <span>#tech</span>
-            <span>#self-hosting</span>
+            {data.tags?.map((tag, index) => (
+              <span key={index}>#{tag.name}</span>
+            ))}
           </div>
-
-          <div className="content">{data.content}</div>
+          <div className="blogimage">
+            <img src={data.thumbnail} alt="blog image" />
+          </div>
+          <div
+            className="content"
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(data.content),
+            }}
+          />
         </article>
       )}
     </>

@@ -22,7 +22,7 @@ function ReadNext() {
             latestPosts.map((latestPost) => (
               <Link to={`/posts/${latestPost.id}`} key={latestPost.id}>
                 <div className="blog11">
-                  <img src="/vite.svg" alt="" />
+                  <img src={latestPost.thumbnail} alt="post thumbnail" />
                   <div className="blogdetails">
                     <div className="blog-title11">{latestPost.title}</div>
                     <div className="blog-autherDate">

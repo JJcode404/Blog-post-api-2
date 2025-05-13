@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
 import { useFetch } from "../utilis/userFetch";
+import { getFirstTwoParagraphs } from "../utilis/getParagraph";
+import DOMPurify from "dompurify";
+
 const PostList = () => {
   const { data, error, loading } = useFetch();
 
@@ -34,25 +37,30 @@ const PostList = () => {
                 </span>
               </div>
               <div className="tags">
-                <span>#tech</span>
-                <span>#self-hosting</span>
+                {post.tags?.map((tag, index) => (
+                  <span key={index}>#{tag.name}</span>
+                ))}
               </div>
 
               {/* Blog Image */}
               <div className="blog-image-wrapper">
                 <img
-                  src="./screen2.png"
+                  src={post.thumbnail}
                   alt="Blog Preview"
                   className="blog-image"
                 />
               </div>
-              <div className="content">
-                <p>{post.content.slice(0, 300)}...</p>
-              </div>
+              <div
+                className="content"
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(
+                    getFirstTwoParagraphs(post.content)
+                  ),
+                }}
+              />
               <div className="readmore">
                 <Link to={`posts/${post.id}`}>Read more →</Link>
               </div>
-              <hr />
             </article>
           ))
       ) : (

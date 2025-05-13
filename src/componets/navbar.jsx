@@ -19,6 +19,11 @@ function Navbar() {
         <div className="left">
           <Link to={"pages/about"}>About</Link>
           <a href="mailto:khamjapher1@gmail.com">Contact</a>
+          {user && (
+            <a href={`http://localhost:5173/users/author/${user.id}`}>
+              Create Blog
+            </a>
+          )}
         </div>
         {user ? (
           <span className="welcome end">

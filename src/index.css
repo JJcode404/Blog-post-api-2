@@ -68,6 +68,9 @@ body {
   margin-bottom: 4px;
   margin: 20px 0;
 }
+.blog-title::first-letter {
+  text-transform: uppercase;
+}
 
 .dotted-line {
   border-top: 3px dotted black;
@@ -93,6 +96,8 @@ hr {
   font-size: 0.875rem;
   margin-bottom: 24px;
   margin: 20px 0;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .tags span {
@@ -167,6 +172,20 @@ a {
   font-size: 1.2em;
   line-height: 1.5;
 }
+.blogimage {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+.blogimage img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
 /* comments */
 .comments {
   font-family: Arial, Helvetica, sans-serif;
@@ -235,7 +254,7 @@ button:hover {
 }
 
 .blog11 img {
-  width: 100px;
+  width: 150px;
   object-fit: cover;
   height: 100%;
 }
@@ -301,4 +320,24 @@ nav .logout {
   .nav {
     align-items: self-start;
   }
+}
+
+.blog-meta {
+  font-size: 0.9rem;
+  color: #888;
+  margin-bottom: 0.5rem;
+}
+
+.blog-tags {
+  margin-bottom: 1rem;
+}
+
+.blog-tag {
+  display: inline-block;
+  background: #eef2f7;
+  color: #555;
+  padding: 0.3rem 0.6rem;
+  margin-right: 0.4rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
 }
