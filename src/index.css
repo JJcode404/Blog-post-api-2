@@ -74,9 +74,14 @@ body {
 
 .dotted-line {
   border-top: 3px dotted black;
-  margin: 8px 0;
 }
 
+.dotteddiv {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+}
 .meta {
   color: #666;
   font-size: 0.875rem;
@@ -223,59 +228,6 @@ button:hover {
 }
 .commentAuthor {
   font-weight: bold;
-}
-/* readmore */
-.readNext {
-  margin-top: 3rem;
-}
-
-.readNext h1 {
-  font-size: 1.5rem;
-  margin-bottom: 1.5rem;
-  border-bottom: 2px solid #ddd;
-  padding-bottom: 0.5rem;
-  font-family: "IBM Plex Mono", monospace;
-}
-
-.bloglist11 {
-  display: block;
-}
-
-.blog11 {
-  display: flex;
-  background: #f9f9f9;
-  border-radius: 8px;
-  overflow: hidden;
-  align-items: center;
-  gap: 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  cursor: pointer;
-  margin: 2em;
-}
-
-.blog11 img {
-  width: 150px;
-  object-fit: cover;
-  height: 100%;
-}
-
-.blogdetails {
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.blog-title11 {
-  font-weight: bold;
-  font-size: 1rem;
-  margin-bottom: 0.3rem;
-  font-family: "IBM Plex Mono", monospace;
-}
-
-.blog-autherDate {
-  font-size: 0.85rem;
-  color: #666;
 }
 
 /* footer */

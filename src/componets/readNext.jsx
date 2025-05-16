@@ -1,44 +1,59 @@
 import { Link } from "react-router-dom";
 import { useFetch } from "../utilis/userFetch";
 import { format } from "date-fns";
+import styles from "../styles/ReadNext.module.css";
 
 function ReadNext() {
-  let { data, error, loading } = useFetch(`http://localhost:3000/posts/latest`);
-  let latestPosts = data;
+  const { data, error, loading } = useFetch(
+    `http://localhost:3000/posts/latest`
+  );
+  const latestPosts = data;
 
   if (loading) {
-    return <p style={{ textAlign: "center" }}>Loading posts...</p>;
+    return <p className={styles.centerText}>Loading posts...</p>;
   }
 
   if (error) {
-    return <p style={{ color: "red", textAlign: "center" }}>{error.message}</p>;
+    return (
+      <p className={`${styles.centerText} ${styles.errorText}`}>
+        {error.message}
+      </p>
+    );
   }
+
   return (
-    <>
-      <div className="readNext">
-        <h1>Read next</h1>
-        <div className="bloglist11">
-          {latestPosts && latestPosts.length > 0 ? (
-            latestPosts.map((latestPost) => (
-              <Link to={`/posts/${latestPost.id}`} key={latestPost.id}>
-                <div className="blog11">
-                  <img src={latestPost.thumbnail} alt="post thumbnail" />
-                  <div className="blogdetails">
-                    <div className="blog-title11">{latestPost.title}</div>
-                    <div className="blog-autherDate">
-                      {latestPost.author.name} -{" "}
-                      {format(new Date(latestPost.createdAt), "MMMM d")}
-                    </div>
+    <div className={styles.readNext}>
+      <h1 className={styles.heading}>Read next</h1>
+      <div className={styles.postList}>
+        {latestPosts && latestPosts.length > 0 ? (
+          latestPosts.map((post) => (
+            <Link
+              to={`/posts/${post.id}`}
+              key={post.id}
+              className={styles.postLink}
+            >
+              <div className={styles.postCard}>
+                <img
+                  src={post.thumbnail}
+                  alt="Post thumbnail"
+                  className={styles.thumbnail}
+                />
+                <div className={styles.postDetails}>
+                  <div className={styles.postTitle}>{post.title}</div>
+                  <div className={styles.authorDate}>
+                    {post.author.name} –{" "}
+                    {format(new Date(post.createdAt), "MMMM d")}
                   </div>
                 </div>
-              </Link>
-            ))
-          ) : (
-            <p>No posts available.</p>
-          )}
-        </div>
+              </div>
+            </Link>
+          ))
+        ) : (
+          <p>No posts available.</p>
+        )}
       </div>
-    </>
+    </div>
   );
 }
+
 export { ReadNext };

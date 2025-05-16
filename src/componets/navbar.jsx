@@ -21,13 +21,13 @@ function Navbar() {
           <a href="mailto:khamjapher1@gmail.com">Contact</a>
           {user && (
             <a href={`http://localhost:5173/users/author/${user.id}`}>
-              Create Blog
+              My Blogs
             </a>
           )}
         </div>
         {user ? (
           <span className="welcome end">
-            Welcome 👋{user.name || user.email || "User"}🎉 |{" "}
+            👋Welcome back,{user.name || user.email || "User"} |{" "}
             <a className="logout" onClick={logout}>
               logout
             </a>
