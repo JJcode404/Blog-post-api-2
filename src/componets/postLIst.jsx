@@ -2,13 +2,10 @@ import { Link } from "react-router-dom";
 import { useFetch } from "../utilis/userFetch";
 import { getFirstTwoParagraphs } from "../utilis/getParagraph";
 import DOMPurify from "dompurify";
+import Loader from "./Loader";
 
 const PostList = () => {
   const { data, error, loading } = useFetch();
-
-  if (loading) {
-    return <p style={{ textAlign: "center" }}>Loading posts...</p>;
-  }
 
   if (error) {
     return <p style={{ color: "red", textAlign: "center" }}>{error.message}</p>;
@@ -16,6 +13,7 @@ const PostList = () => {
 
   return (
     <>
+      {loading && <Loader />}
       {data && data.length > 0 ? (
         data
           .filter((post) => post.title && post.content)

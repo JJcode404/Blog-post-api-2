@@ -5,19 +5,21 @@ const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      try {
-        const decoded = jwtDecode(token);
-        setUser(decoded);
-      } catch (e) {
-        console.error("Invalid token", e);
-        localStorage.removeItem("token");
-      }
+    const savedToken = localStorage.getItem("token");
+    if (savedToken) {
+      setToken(savedToken);
+      setUser(jwtDecode(savedToken));
     }
   }, []);
+
+  const setAuthToken = (newToken) => {
+    localStorage.setItem("token", newToken);
+    setToken(newToken);
+    setUser(jwtDecode(newToken));
+  };
 
   const login = async (email, password) => {
     const response = await fetch("http://localhost:3000/login", {
@@ -32,9 +34,7 @@ const AuthProvider = ({ children }) => {
       throw new Error(data.error);
     }
 
-    console.log("Login successful:", data);
-    localStorage.setItem("token", data.Token);
-    setUser(data.user);
+    setAuthToken(data.Token);
     return data;
   };
 
@@ -52,23 +52,19 @@ const AuthProvider = ({ children }) => {
       throw new Error(data.error);
     }
     console.log("this function is read");
-    const LoginInUser = await login(email, password);
-    console.log(
-      "here is the user data returned from signup user so this means you have loged in",
-      LoginInUser
-    );
-
-    setUser(LoginInUser);
-    console.log("signup successful:", LoginInUser);
+    await login(email, password);
   };
 
   const logout = () => {
     setUser(null);
+    setToken(null);
     localStorage.removeItem("token");
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, setUser, signUp }}>
+    <AuthContext.Provider
+      value={{ user, login, logout, setUser, signUp, token }}
+    >
       {children}
     </AuthContext.Provider>
   );

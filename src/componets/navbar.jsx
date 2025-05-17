@@ -1,10 +1,16 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../utilis/authContextapi";
-import { useState } from "react";
 
 function Navbar() {
-  const { user, logout } = useAuth();
-  console.log(user);
+  const { user, logout, token } = useAuth();
+  const handleGoToBlogs = () => {
+    window.location.href = `http://localhost:5174/users/author/${user.id}?token=${token}`;
+  };
+
+  if (user) {
+    console.log(token);
+    console.log(user.id);
+  }
 
   return (
     <header className="header">
@@ -19,11 +25,7 @@ function Navbar() {
         <div className="left">
           <Link to={"pages/about"}>About</Link>
           <a href="mailto:khamjapher1@gmail.com">Contact</a>
-          {user && (
-            <a href={`http://localhost:5173/users/author/${user.id}`}>
-              My Blogs
-            </a>
-          )}
+          {user && token && <a onClick={handleGoToBlogs}>My Blogs</a>}
         </div>
         {user ? (
           <span className="welcome end">

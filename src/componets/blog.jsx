@@ -1,14 +1,11 @@
 import { useFetch } from "../utilis/userFetch";
 import DOMPurify from "dompurify";
+import Loader from "./Loader";
 
 function Blog({ blogId }) {
   const { data, error, loading } = useFetch(
     `http://localhost:3000/posts/${blogId}`
   );
-
-  if (loading) {
-    return <p style={{ textAlign: "center" }}>Loading posts...</p>;
-  }
 
   if (error) {
     return <p style={{ color: "red", textAlign: "center" }}>{error.message}</p>;
@@ -16,6 +13,7 @@ function Blog({ blogId }) {
 
   return (
     <>
+      {loading && <Loader />}
       {data && (
         <article className="blog" key={data.id}>
           <h1 className="blog-title">{data.title}</h1>

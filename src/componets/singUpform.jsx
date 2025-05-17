@@ -52,10 +52,6 @@ function SignupForm() {
           required
         />
       </label>
-      <label>
-        Confirm Password:
-        <input type="password" name="confirmPassword" required />
-      </label>
       <button type="submit">Register</button>
       {error && <p style={{ color: "red" }}>{error}</p>}
     </form>
