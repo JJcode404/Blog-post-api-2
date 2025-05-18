@@ -8,9 +8,13 @@ function AuthPage() {
   const [view, setView] = useState("login");
   return (
     <div className={styles.container}>
-      <Header title={view === "login" ? "Log In" : "Sign Up"} />
-      {view === "login" ? <LoginForm /> : <SignupForm />}
-      <div className={styles.switcher}>
+      {/* <Header title={view === "login" ? "Log In" : "Sign Up"} /> */}
+      {view === "login" ? (
+        <LoginForm setview={setView} />
+      ) : (
+        <SignupForm setview={setView} />
+      )}
+      {/* <div className={styles.switcher}>
         {view === "login" ? (
           <p>
             No account?{" "}
@@ -22,7 +26,7 @@ function AuthPage() {
             <button onClick={() => setView("login")}>Log In</button>
           </p>
         )}
-      </div>
+      </div> */}
     </div>
   );
 }

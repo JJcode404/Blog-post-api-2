@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Background Circle -->
+  <circle cx="100" cy="100" r="90" fill="#232323" />
+  
+  <!-- WF letter design -->
+  <g fill="#f0f0f0">
+    <!-- W -->
+    <path d="M55,55 L65,55 L75,110 L85,70 L95,110 L105,55 L115,55 L100,145 L85,90 L70,145 z" />
+    
+    <!-- F -->
+    <path d="M125,55 L165,55 L165,70 L140,70 L140,90 L160,90 L160,105 L140,105 L140,145 L125,145 z" />
+  </g>
+  
+  <!-- Cursor inspired by Monkeytype -->
+  <rect x="105" y="125" width="4" height="20" fill="#e2b714">
+    <animate attributeName="opacity" values="1;0;1" dur="1.5s" repeatCount="indefinite" />
+  </rect>
+  
+  <!-- Bottom flow line -->
+  <path d="M45,135 Q100,170 155,135" stroke="#e2b714" stroke-width="3" fill="none" />
+</svg>

@@ -8,20 +8,55 @@ const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
 
   useEffect(() => {
+    // Load token from localStorage on initial render
     const savedToken = localStorage.getItem("token");
     if (savedToken) {
-      setToken(savedToken);
-      setUser(jwtDecode(savedToken));
+      try {
+        // Verify token is valid before setting
+        const decoded = jwtDecode(savedToken);
+
+        // Check if token is expired
+        const currentTime = Date.now() / 1000;
+        if (decoded.exp && decoded.exp < currentTime) {
+          // Token expired, clean up
+          localStorage.removeItem("token");
+        } else {
+          setToken(savedToken);
+          setUser(decoded);
+        }
+      } catch (error) {
+        // Invalid token, clear it
+        console.error("Invalid token:", error);
+        localStorage.removeItem("token");
+      }
     }
   }, []);
 
   const setAuthToken = (newToken) => {
+    if (!newToken) {
+      // Clear everything if no token
+      localStorage.removeItem("token");
+      setToken(null);
+      setUser(null);
+      return;
+    }
+
+    // Store the new token
     localStorage.setItem("token", newToken);
     setToken(newToken);
-    setUser(jwtDecode(newToken));
+
+    try {
+      const decoded = jwtDecode(newToken);
+      setUser(decoded);
+    } catch (error) {
+      console.error("Failed to decode token:", error);
+    }
   };
 
   const login = async (email, password) => {
+    // First ensure we're logged out to prevent token conflicts
+    logout();
+
     const response = await fetch("http://localhost:3000/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -31,6 +66,7 @@ const AuthProvider = ({ children }) => {
     const data = await response.json();
 
     if (!response.ok) {
+      console.log(data.error);
       throw new Error(data.error);
     }
 
@@ -48,17 +84,31 @@ const AuthProvider = ({ children }) => {
     const data = await response.json();
 
     if (!response.ok) {
-      console.error("Login failed:", data);
-      throw new Error(data.error);
+      console.error("Signup failed:", data);
+      throw new Error(
+        data.error || "Failed to create account. Please try again."
+      );
     }
-    console.log("this function is read");
+
+    // Clear any existing session before logging in
+    logout();
+
+    // Then login with the new credentials
     await login(email, password);
   };
 
   const logout = () => {
+    // Clear all auth data
     setUser(null);
     setToken(null);
     localStorage.removeItem("token");
+
+    // Force clear any URL parameters related to token
+    if (window.history && window.history.replaceState) {
+      const url = new URL(window.location.href);
+      url.searchParams.delete("token");
+      window.history.replaceState({}, document.title, url);
+    }
   };
 
   return (
