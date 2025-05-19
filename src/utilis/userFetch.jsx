@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const useFetch = (url = "http://localhost:3000/posts") => {
+const useFetch = (url = "https://blog-post-api-posm.onrender.com/posts") => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);

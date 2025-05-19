@@ -57,11 +57,14 @@ const AuthProvider = ({ children }) => {
     // First ensure we're logged out to prevent token conflicts
     logout();
 
-    const response = await fetch("http://localhost:3000/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
+    const response = await fetch(
+      "https://blog-post-api-posm.onrender.com/login",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      }
+    );
 
     const data = await response.json();
 
@@ -75,11 +78,14 @@ const AuthProvider = ({ children }) => {
   };
 
   const signUp = async (fullname, email, password) => {
-    const response = await fetch("http://localhost:3000/sign-up", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password, fullname }),
-    });
+    const response = await fetch(
+      "https://blog-post-api-posm.onrender.com/sign-up",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password, fullname }),
+      }
+    );
 
     const data = await response.json();
 

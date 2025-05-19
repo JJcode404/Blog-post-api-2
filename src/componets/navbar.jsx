@@ -15,7 +15,7 @@ function Navbar() {
     }
 
     // Use current token for redirection
-    const blogUrl = `http://localhost:5173/users/author/${
+    const blogUrl = `https://blogpost-author-panel.vercel.app/users/author/${
       user.id
     }?token=${encodeURIComponent(token)}`;
 

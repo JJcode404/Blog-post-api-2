@@ -23,7 +23,7 @@ function CommentBox({ blogId, onNewComment }) {
       try {
         if (content) {
           const newComment = await postData(
-            `http://localhost:3000/posts/${blogId}/comments`,
+            `https://blog-post-api-posm.onrender.com/posts/${blogId}/comments`,
             {
               content,
               userId: user.id,
@@ -74,7 +74,7 @@ function CommentBox({ blogId, onNewComment }) {
 function CommentSection({ blogId }) {
   const { user } = useAuth();
   const { data, error, loading } = useFetch(
-    `http://localhost:3000/posts/${blogId}/comments`
+    `https://blog-post-api-posm.onrender.com/posts/${blogId}/comments`
   );
 
   const [comments, setComments] = useState([]);

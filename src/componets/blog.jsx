@@ -4,7 +4,7 @@ import Loader from "./Loader";
 
 function Blog({ blogId }) {
   const { data, error, loading } = useFetch(
-    `http://localhost:3000/posts/${blogId}`
+    `https://blog-post-api-posm.onrender.com/posts/${blogId}`
   );
 
   if (error) {
