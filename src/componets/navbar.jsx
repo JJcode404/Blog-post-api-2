@@ -35,7 +35,11 @@ function Navbar() {
       {user && (
         <div className="welcome-banner">
           <span>
-            ✨ Welcome back, {user.name || user.email || "Wordsmith"}! ✨
+            ✨ Welcome back,{" "}
+            <span className="userName">
+              {user.name || user.email || "Wordsmith"}
+            </span>
+            ! ✨
           </span>
         </div>
       )}

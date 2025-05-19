@@ -30,7 +30,7 @@ const PostList = () => {
 
               <div className="meta">
                 {new Date(post.createdAt).toLocaleDateString()} ::{" "}
-                <span className="author">
+                <span className="author userName">
                   {post.author?.name || "Unknown Author"}
                 </span>
               </div>

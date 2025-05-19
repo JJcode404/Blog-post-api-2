@@ -3,6 +3,7 @@ import { PostPage } from "../../Pages/PostPage";
 import { AuthPage } from "../../Pages/AuthPage";
 import { RootLayout } from "./rooteLayout";
 import { AboutMe } from "../aboutme";
+import { NotFound } from "../Notfound";
 
 const routes = [
   {
@@ -26,6 +27,10 @@ const routes = [
   {
     path: "/account",
     element: <AuthPage />,
+  },
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ];
 

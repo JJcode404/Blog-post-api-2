@@ -105,8 +105,10 @@ function CommentSection({ blogId }) {
         comments.map((comment) => (
           <div className="comment" key={comment.id}>
             <div className="commentAuthor">
-              {comment.user?.name || "Anonymous"} •{" "}
-              {format(new Date(comment.createdAt), "MMMM d")}
+              <span className="userName">
+                {comment.user?.name || "Anonymous"}{" "}
+              </span>
+              • {format(new Date(comment.createdAt), "MMMM d")}
             </div>
             <p>{comment.content}</p>
           </div>
