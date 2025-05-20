@@ -4,11 +4,13 @@ import { AuthPage } from "../../Pages/AuthPage";
 import { RootLayout } from "./rooteLayout";
 import { AboutMe } from "../aboutme";
 import { NotFound } from "../Notfound";
+import { ErrorPage } from "../ErrorPage";
 
 const routes = [
   {
     path: "/",
     element: <RootLayout />,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
@@ -22,6 +24,7 @@ const routes = [
         path: "pages/about",
         element: <AboutMe />,
       },
+      { path: "*", element: <NotFound /> },
     ],
   },
   {
