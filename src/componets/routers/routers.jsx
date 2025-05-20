@@ -35,6 +35,14 @@ const routes = [
     path: "*",
     element: <NotFound />,
   },
+  {
+    path: "/serverError",
+    element: <ErrorPage />,
+  },
+  {
+    path: "/404",
+    element: <NotFound />,
+  },
 ];
 
 export { routes };

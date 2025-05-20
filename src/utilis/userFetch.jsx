@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
 
 const useFetch = (url = "https://blog-post-api-posm.onrender.com/posts") => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log(url);
@@ -13,7 +15,12 @@ const useFetch = (url = "https://blog-post-api-posm.onrender.com/posts") => {
     }
     fetch(`${url}`, { mode: "cors" })
       .then((response) => {
+        if (response.status === 404) {
+          navigate("/404");
+          return null;
+        }
         if (response.status >= 400) {
+          navigate("/serverError");
           throw new Error("server error");
         }
         return response.json();
