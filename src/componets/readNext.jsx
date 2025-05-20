@@ -6,7 +6,7 @@ import Loader from "./Loader";
 
 function ReadNext() {
   const { data, error, loading } = useFetch(
-    `http://localhost:3000/posts/latest`
+    `https://blog-post-api-posm.onrender.com/posts/latest`
   );
   const latestPosts = data;
 
