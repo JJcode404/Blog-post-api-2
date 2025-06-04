@@ -5,6 +5,7 @@ import { usePostReq } from "../utilis/usePostReq";
 import { useFetch } from "../utilis/userFetch";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
+import Loader from "./Loader";
 
 function CommentBox({ blogId, onNewComment }) {
   const { loading, postData } = usePostReq();
@@ -65,7 +66,7 @@ function CommentBox({ blogId, onNewComment }) {
           </button>
           {!user && <p>Please log in to comment.</p>}
         </div>
-        {loading && <p>Commenting...</p>}
+        {loading && <Loader />}
       </form>
     </div>
   );
@@ -89,14 +90,6 @@ function CommentSection({ blogId }) {
     setComments((prev) => [newComment, ...prev]);
   };
 
-  if (loading) {
-    return <p style={{ textAlign: "center" }}>Loading posts...</p>;
-  }
-
-  if (error) {
-    return <p style={{ color: "red", textAlign: "center" }}>{error.message}</p>;
-  }
-
   return (
     <section className="comments">
       <h2>Top comments ({comments.length})</h2>
@@ -116,6 +109,7 @@ function CommentSection({ blogId }) {
       ) : (
         <p style={{ textAlign: "center" }}>No comments posted.</p>
       )}
+      {loading && <Loader />}
     </section>
   );
 }
